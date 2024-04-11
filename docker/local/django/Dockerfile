@@ -13,6 +13,8 @@ COPY . /app
 
 EXPOSE 8000
 
+EXPOSE 2181
+
 EXPOSE 6380
 
 CMD ["python","manage.py","runserver", "0.0.0.0:8000"]

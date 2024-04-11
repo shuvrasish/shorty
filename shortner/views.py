@@ -44,10 +44,9 @@ class URLSViewSet(viewsets.ModelViewSet):
                 raise ValidationError(validator.errors)
             original_url = validator.validated_data.get("url")
             shortcode = URLS.objects.shorten(original_url)
-            url_obj = URLS(original_url=original_url, shortcode=shortcode)
-            url_obj.save()
+            URLS.objects.create(original_url=original_url, shortcode=shortcode)
             short_url = self._get_short_url(request, shortcode)
-            return Response({"data": url_obj.shortcode, "short_url": short_url})
+            return Response({"data": shortcode, "short_url": short_url})
         except IntegrityError as e:
             return Response(
                 {"error": f"Internal Server Error: {e}"},

@@ -4,7 +4,7 @@ services:
   django:
     build:
       context: .
-      dockerfile: docker/local/Dockerfile
+      dockerfile: docker/local/django/Dockerfile
     image: shortner
     container_name: shortner
     volumes:
@@ -18,7 +18,7 @@ services:
     depends_on:
       - redis
   redis:
-    image: redis
+    image: redis:latest
     container_name: shorty_redis
     volumes:
       - ./redis.conf:/redis.conf # Mount the redis.conf file
@@ -30,6 +30,8 @@ services:
       - shortner-network
 
 volumes:
+  zookeeper-data:
+    driver: local
   redis-data:
     driver: local
 
