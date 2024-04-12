@@ -7,9 +7,16 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 COPY requirements.txt .
 
+RUN addgroup --system django \
+    && adduser --system --ingroup django django
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
+
+COPY ./docker/local/django/entrypoint /entrypoint
+RUN sed -i 's/\r$//g' /entrypoint
+RUN chmod +x /entrypoint
 
 EXPOSE 8000
 
@@ -17,4 +24,6 @@ EXPOSE 2181
 
 EXPOSE 6380
 
-CMD ["python","manage.py","runserver", "0.0.0.0:8000"]
+USER django
+
+ENTRYPOINT ["/entrypoint"]

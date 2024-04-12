@@ -22,7 +22,6 @@ services:
     container_name: shorty_redis
     volumes:
       - ./redis.conf:/redis.conf # Mount the redis.conf file
-      - redis-data:/data
     ports:
       - "6380:6380"
     command: redis-server /redis.conf # Use the mounted redis.conf file
@@ -31,8 +30,6 @@ services:
 
 volumes:
   zookeeper-data:
-    driver: local
-  redis-data:
     driver: local
 
 networks:

@@ -153,17 +153,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {
     "version": 1,
+    "disable_existing_loggers": False,
     "handlers": {
         "console": {
             "level": "INFO",
             "class": "logging.StreamHandler",
+            "formatter": "colored",
         },
     },
     "loggers": {
         "django": {
             "handlers": ["console"],
             "level": "INFO",
-            "propagate": False,
+            "propagate": True,
+        },
+    },
+    "formatters": {
+        "colored": {
+            "()": "logger.ColoredFormatter",
+            "format": "%(asctime)s - %(levelname)s - %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         },
     },
 }

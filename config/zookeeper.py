@@ -1,6 +1,9 @@
 import logging
 
+from django.core.cache import cache
 from kazoo.client import KazooClient, KazooState
+
+from config.constants import CACHE_RANGE_KEY, ZOOKEEPER_COUNT_RANGES_PATH
 
 logging.basicConfig()
 
@@ -18,7 +21,8 @@ class ZookeeperCounter:
     def __init__(self, hosts, counter_path):
         self.zk = KazooClient(hosts=hosts)
         self.zk.add_listener(my_listener)
-        self.counter_path = counter_path
+        range_key = cache.get(CACHE_RANGE_KEY)
+        self.counter_path = f"{ZOOKEEPER_COUNT_RANGES_PATH}/{range_key}/current_count"
 
     def connect(self):
         self.zk.start()
