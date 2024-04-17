@@ -20,11 +20,11 @@ services:
   redis:
     image: redis:latest
     container_name: shorty_redis
-    volumes:
-      - ./redis.conf:/redis.conf # Mount the redis.conf file
+    env_file:
+      - .envs/.local/.env
     ports:
-      - "6380:6380"
-    command: redis-server /redis.conf # Use the mounted redis.conf file
+      - "6379:6379"
+    command: redis-server --requirepass shorty
     networks:
       - shortner-network
 

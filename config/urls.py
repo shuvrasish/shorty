@@ -17,7 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from config import views
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("shortner/", include("shortner.urls")),
+    path("api/", include("shortner.urls")),
+    path("", views.index, name="index"),
+    path("<str:shortcode>", views.redirect_to_long_url, name="redirect_to_long_url"),
 ]

@@ -30,15 +30,14 @@ def initialize_zookeeper_state():
         # Define count ranges and their statuses
         count_ranges = {
             "R1": {"start": 1, "end": 10000000, "in_use": False, "current_count": 0},
-            "R2": {"start": 10000001, "end": 20000000, "in_use": False, "current_count": 0},
-            "R3": {"start": 20000001, "end": 30000000, "in_use": False, "current_count": 0},
-            "R4": {"start": 30000001, "end": 40000000, "in_use": False, "current_count": 0},
-            "R5": {"start": 40000001, "end": 50000000, "in_use": False, "current_count": 0},
-            "R6": {"start": 50000001, "end": 60000000, "in_use": False, "current_count": 0},
-            "R7": {"start": 60000001, "end": 70000000, "in_use": False, "current_count": 0},
-            "R8": {"start": 70000001, "end": 80000000, "in_use": False, "current_count": 0},
-            "R9": {"start": 80000001, "end": 90000000, "in_use": False, "current_count": 0},
-            "R10": {"start": 90000001, "end": 100000000, "in_use": False, "current_count": 0},
+            "R2": {"start": 10000001, "end": 20000000, "in_use": False, "current_count": 10000000},
+            "R3": {"start": 20000001, "end": 30000000, "in_use": False, "current_count": 20000000},
+            "R4": {"start": 30000001, "end": 40000000, "in_use": False, "current_count": 30000000},
+            "R5": {"start": 40000001, "end": 50000000, "in_use": False, "current_count": 40000000},
+            "R6": {"start": 50000001, "end": 60000000, "in_use": False, "current_count": 50000000},
+            "R7": {"start": 60000001, "end": 70000000, "in_use": False, "current_count": 60000000},
+            "R8": {"start": 70000001, "end": 80000000, "in_use": False, "current_count": 70000000},
+            "R9": {"start": 80000001, "end": 90000000, "in_use": False, "current_count": 80000000},
         }
 
         # Create child znodes for each count range

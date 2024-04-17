@@ -7,8 +7,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 COPY requirements.txt .
 
-RUN addgroup --system django \
-    && adduser --system --ingroup django django
+RUN addgroup --system shorty \
+    && adduser --system --ingroup shorty shorty
 
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -22,8 +22,10 @@ EXPOSE 8000
 
 EXPOSE 2181
 
-EXPOSE 6380
+EXPOSE 6379
 
-USER django
+RUN chown shorty:shorty /app
+
+USER shorty
 
 ENTRYPOINT ["/entrypoint"]
