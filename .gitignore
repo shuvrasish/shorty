@@ -227,4 +227,4 @@ report.html
 staticfiles/
 tmp/
 
-*/__pycache__/
+*/__pycache__/*

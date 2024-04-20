@@ -30,21 +30,32 @@ git clone https://github.com/shuvrasish/shorty.git
 ```
 
 2. Navigate to the project directory.
-3. Build the Docker image:
+3. Install and run postgres on your system:
+
+```
+sudo systemctl start postgresql
+```
+
+4. Build the Docker image for zookeeper:
+
+```
+docker-compose -f docker-compose-zookeeper.yml up --build (-d if you want to run it in detached mode)
+```
+
+5. Build the Docker image for the app server:
 
 ```
 docker-compose up --build (-d if you want to run it in detached mode)
 ```
 
-4. Once the Docker container is running, open your web browser and navigate to `http://localhost:8000` to access the URL shortener application.
+6. Once the Docker container is running, open your web browser and navigate to `http://localhost:8000` to access the URL shortener application.
 
 ## Usage
 
 1. Enter the long URL you want to shorten in the provided input field.
-2. (Optional) Provide a custom slug for the shortened URL.
-3. Click the "Shorten" button to generate the short URL.
-4. Copy the generated short URL and share it with others.
-5. When someone visits the short URL, they will be redirected to the original long URL.
+2. Click the "Shorten" button to generate the short URL.
+3. Copy the generated short URL and share it with others.
+4. When someone visits the short URL, they will be redirected to the original long URL.
 
 ## Contributing
 
