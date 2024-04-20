@@ -14,10 +14,18 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-COPY ./zookeeper/setup.py /app
+COPY ./docker/production/django/entrypoint /entrypoint
+RUN sed -i 's/\r$//g' /entrypoint
+RUN chmod +x /entrypoint
+
+EXPOSE 8000
+
+EXPOSE 2181
+
+EXPOSE 6379
 
 RUN chown shorty:shorty /app
 
 USER shorty
 
-CMD ["python","setup.py"]
+ENTRYPOINT ["/entrypoint"]
