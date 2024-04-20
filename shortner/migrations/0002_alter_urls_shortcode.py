@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="urls",
             name="shortcode",
-            field=models.CharField(max_length=7, unique=True),
+            field=models.CharField(max_length=8, unique=True),
         ),
     ]

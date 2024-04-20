@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  zookeeper:
+    image: zookeeper:latest
+    container_name: shorty_zookeeper
+    volumes:
+      - ./zookeeper/zoo.cfg:/conf/zoo.cfg
+      - zookeeper-data:/data
+    ports:
+      - "2181:2181"
+    networks:
+      - shortner-network
+  zookeeper_initializer:
+    build:
+      context: .
+      dockerfile: docker/local/zookeeper/Dockerfile
+    container_name: zookeeper_initializer
+    networks:
+      - shortner-network
+    depends_on:
+      - zookeeper
+
+volumes:
+  zookeeper-data:
+    driver: local
+networks:
+  shortner-network:

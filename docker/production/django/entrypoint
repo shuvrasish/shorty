@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+# Run Python script to create the database
+python scripts/postgres.py
+
+# Apply migrations to the database
+python manage.py migrate
+
+# Register the server (assuming this is a custom management command)
+python manage.py server register
+
+# Run the Django development server
+gunicorn config.wsgi:application --bind 0.0.0.0:8000

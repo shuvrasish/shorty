@@ -4,13 +4,13 @@ services:
   django:
     build:
       context: .
-      dockerfile: docker/local/django/Dockerfile
+      dockerfile: docker/production/django/Dockerfile
     image: shortner
     container_name: shortner
     volumes:
       - .:/app:z
     env_file:
-      - .envs/.local/.env
+      - .envs/.production/.env
     ports:
       - "8000:8000"
     networks:
@@ -21,7 +21,7 @@ services:
     image: redis:latest
     container_name: shorty_redis
     env_file:
-      - .envs/.local/.env
+      - .envs/.production/.env
     ports:
       - "6379:6379"
     command: redis-server --requirepass shorty

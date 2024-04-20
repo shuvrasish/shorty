@@ -67,7 +67,9 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "media/templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -92,8 +94,8 @@ DATABASES = {
         "NAME": os.environ.get("POSTGRES_DB"),
         "USER": os.environ.get("POSTGRES_USER"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-        "HOST": os.environ.get("POSTGRES_HOST"),
-        "PORT": os.environ.get("POSTGRES_PORT"),
+        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+        "PORT": os.environ.get("POSTGRES_PORT", 5432),
     }
 }
 
@@ -116,12 +118,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+ZOOKEEPER_PORT = os.environ.get("ZOOKEEPER_PORT", 2181)
+ZOOKEEPER_HOST = os.environ.get("ZOOKEEPER_HOST", "localhost")
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"redis://{env.str('REDIS_HOST')}:{env.str('REDIS_PORT')}/1",
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        "KEY_PREFIX": "example",
+        "TIMEOUT": 600,
+        "LOCATION": os.environ.get("REDIS_URL", "localhost"),
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient", "PASSWORD": "shorty"},
     }
 }
 
@@ -147,3 +152,30 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "colored",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+    "formatters": {
+        "colored": {
+            "()": "logger.ColoredFormatter",
+            "format": "%(asctime)s - %(levelname)s - %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}

@@ -2,6 +2,8 @@ import hashlib
 
 from django.db import models
 
+from config.zookeeper import ZookeeperCounter
+
 # Create your models here.
 
 
@@ -14,8 +16,14 @@ class ShortenManagerUtil(models.Manager):
         return hashed_url
 
     def shorten(self, url: str) -> str:
-        hashed_url = self._hash_url(url)
-        return hashed_url[:7]
+        counter = ZookeeperCounter()
+        counter.connect()
+
+        counter.increment_counter()
+        current_value = counter.get_counter_value()
+
+        counter.close()
+        return current_value
 
 
 class UrlsManager(ShortenManagerUtil):
@@ -25,7 +33,7 @@ class UrlsManager(ShortenManagerUtil):
 class URLS(models.Model):
     id = models.AutoField(primary_key=True)
     original_url = models.CharField(max_length=2048)
-    shortcode = models.CharField(max_length=7, unique=True)
+    shortcode = models.CharField(max_length=8, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = UrlsManager()
